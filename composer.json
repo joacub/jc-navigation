@@ -1,0 +1,26 @@
+{
+    "name": "joacub/jc-navigation",
+    "description": "Crea facimente menus desde administración",
+    "type": "library",
+    "keywords": [
+        "zf2, navegación, navigation"
+    ],
+    "homepage": "https://github.com/joacub/jc-navigation",
+    "authors": [
+        {
+            "name": "Johan",
+            "email": "joacub@gmail.com"
+        }
+    ],
+    "require": {
+        "zendframework/zendframework": "2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "JcNavigation\\": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
