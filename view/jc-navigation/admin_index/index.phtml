@@ -1,0 +1,57 @@
+<?php
+$this->headLink()->prependStylesheet(
+		$this->basepath('/jc-navigation/css/main.css'));
+$this->inlinescript()->appendFile(
+		'//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
+$this->inlinescript()->appendFile($this->basepath('/jc-navigation/js/main.js'));
+?>
+
+<div class="page-header">
+
+	<h1>Menús</h1> <small>Esta funcionalidad te permite utilizar un menú personalizado en vez de los menús por defecto de tu tema.</small>
+
+</div>
+
+<div class="row-fluid">
+	<div class="span4">
+		{jc-navigation-toolbar}
+		<div class="box gradient">
+
+			<div class="title">
+
+				<h4>
+					<span>Ubicación del tema</span>
+				</h4>
+				<a class="minimize" href="#" style="display: none;">Minimize</a>
+			</div>
+			<div style="padding-bottom: 0px; display: block;" class="content">
+				contenido</div>
+
+		</div>
+		<!-- End .box -->
+
+	</div>
+	<!-- End .span8 -->
+
+	<div class="span8">
+
+		<div class="box gradient">
+
+			<div class="title">
+
+				<h4>
+					<span class="icon16 icomoon-icon-bars"></span> <span>Visitors Chart</span>
+				</h4>
+				<a class="minimize" href="#" style="display: none;">Minimize</a>
+			</div>
+			<div style="padding-bottom: 0px; display: block;" class="content">
+				contenido</div>
+
+		</div>
+		<!-- End .box -->
+
+
+	</div>
+	<!-- End .span4 -->
+
+</div>

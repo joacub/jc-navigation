@@ -1,0 +1,69 @@
+.box {
+    box-shadow: 0 1px 0 #FFFFFF;
+    margin-bottom: 25px;
+    min-height: 100%;
+    width: 100%;
+}
+
+.box.gradient .title {
+    background: -moz-linear-gradient(center top , #FFFFFF 1%, #F3F3F3 100%) repeat scroll 0 0 transparent;
+}
+.box .title {
+    background: url("../images/patterns/2.png") repeat scroll 0 0 transparent;
+    border: 1px solid #C4C4C4;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    box-shadow: 0 1px 0 #FFFFFF;
+    height: auto;
+    position: relative;
+}
+
+.box .title h4 {
+    margin-bottom: 0;
+    padding-bottom: 9px;
+    padding-left: 15px;
+    padding-top: 9px;
+}
+
+.box .title .minimize {
+    background: url("../images/icons/minus.png") no-repeat scroll center 3px #F3F3F3;
+    cursor: pointer;
+    display: none;
+}
+
+.box .title .maximize {
+    background: url("../images/icons/plus.png") no-repeat scroll center 3px #F3F3F3;
+    display: block;
+}
+
+.box .title > a {
+    background-color: #F3F3F3;
+    border: 1px solid #C4C4C4;
+    border-radius: 2px 2px 2px 2px;
+    color: #3F3F3F;
+    height: 16px;
+    padding: 0 2px 3px;
+    position: absolute;
+    right: 10px;
+    text-decoration: none;
+    text-indent: -9999px;
+    top: 8px;
+    width: 16px;
+}
+
+.box .content {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #FFFFFF;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-color: -moz-use-text-color #C4C4C4 #C4C4C4;
+    border-image: none;
+    border-right: 1px solid #C4C4C4;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    padding: 10px;
+    position: relative;
+}
