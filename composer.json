@@ -3,7 +3,7 @@
     "description": "Crea facimente menus desde administración",
     "type": "library",
     "keywords": [
-        "zf2, navegación, navigation"
+        "zf2, navegacion, navigation"
     ],
     "homepage": "https://github.com/joacub/jc-navigation",
     "authors": [
