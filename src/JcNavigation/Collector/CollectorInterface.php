@@ -37,4 +37,27 @@ interface CollectorInterface
      * @param MvcEvent $mvcEvent
      */
     public function collect(MvcEvent $mvcEvent);
+    
+    /**
+     * Collects entity.
+     *
+     */
+    public function getEntity();
+    
+    /**
+     * Collects column.
+     *
+     */
+    public function getTitle($entity);
+    
+    /**
+     * Collects router.
+     */
+    public function getRouter();
+    
+    /**
+     * devuelve los parametros necesrios para formar la ruta
+     */
+    public function getRouterParams($entity);
+    
 }

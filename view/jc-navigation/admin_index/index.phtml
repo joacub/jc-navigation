@@ -1,55 +1,131 @@
 <?php
+use Nette\Diagnostics\Debugger;
 $this->headLink()->prependStylesheet(
 		$this->basepath('/jc-navigation/css/main.css'));
 $this->inlinescript()->appendFile(
 		'//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
 $this->inlinescript()->appendFile($this->basepath('/jc-navigation/js/main.js'));
+
+$recursiveHydrator = function($entity) use(&$recursiveHydrator, $sm, $em, $repo, $collectors) {
+	if($entity->getParent() !== null) {
+		$collector = $sm->get($collectors[$entity->getCollector()]);
+		$originalEntity = $em->find($collector->getEntity(), $entity->getReferenceId());
+		echo $this->partial('jc-navigation/admin_index/add-menu-item', array('menuItems' => array(array('data' => $entity, 'entity' => $originalEntity, 'collector' => $collector))));
+	}
+	
+	$children = $repo->getChildren($entity);
+	
+	if(count($children)) {
+		foreach($children as $child)
+			$recursiveHydrator($child);
+	}
+	
+}
+
 ?>
 
 <div class="page-header">
 
-	<h1>Menús</h1> <small>Esta funcionalidad te permite utilizar un menú personalizado en vez de los menús por defecto de tu tema.</small>
+	<h1>Menús</h1>
+	<small>Esta funcionalidad te permite utilizar un menú personalizado en
+		vez de los menús por defecto de tu tema.</small>
 
 </div>
 
 <div class="row-fluid">
 	<div class="span4">
-		{jc-navigation-toolbar}
-		<div class="box gradient">
-
-			<div class="title">
-
-				<h4>
-					<span>Ubicación del tema</span>
-				</h4>
-				<a class="minimize" href="#" style="display: none;">Minimize</a>
-			</div>
-			<div style="padding-bottom: 0px; display: block;" class="content">
-				contenido</div>
-
-		</div>
-		<!-- End .box -->
-
+		<div id="menu-settings-column">{jc-navigation-toolbar}</div>
 	</div>
 	<!-- End .span8 -->
 
 	<div class="span8">
 
 		<div class="box gradient">
+			<div id="menu-management">
+			<div class="nav-tabs-wrapper">
+				<div class="nav-tabs">
+					<?php foreach($navigations as $navigation) : ?>
+					<?php if($activeMenu == $navigation->getId()): $active = $navigation; ?>
+					<span class="nav-tab nav-tab-active"> <?php echo $navigation->getTitle() ?> </span>
+					<?php else: ?>
+					<a class="nav-tab" href="<?php echo $this->url('zfcadmin/JcNavigation', array(), array('query' => array('menu' => 2))) ?>">
+						<?php echo $navigation->getTitle() ?> </a>
+					<?php endif; ?>
+					<?php endforeach; ?>
+					<?php if(isset($active)):?>
+					<a class="nav-tab menu-add-new"
+						href="<?php echo $this->url('zfcadmin/JcNavigation', array(), array('query' => array('menu' => 0))) ?>">
+						<abbr title="Añadir menú">+</abbr>
+					</a>
+					<?php else:?>
+					<span class="nav-tab menu-add-new nav-tab-active">
+						<abbr title="Añadir menú">+</abbr>
+						</span>
+					<?php endif; ?>
+					
+				</div>
+				</div>
+<div class="menu-edit">
+			<form id="update-nav-menu" enctype="multipart/form-data"	method="post" action="<?php if(isset($active)): echo $this->url('zfcadmin/JcNavigation', array(), array('query' => array('menu' => $activeMenu))); else : echo $this->url('zfcadmin/JcNavigation', array('action' => 'create'), array('query' => array('menu' => $activeMenu))); endif; ?>">
+				
+				<div id="nav-menu-header">
+						<div class="submitbox" id="submitpost">
+							<div class="major-publishing-actions">
+								<label for="menu-name" class="menu-name-label howto open-label">
+									<span>Nombre del menú</span>
+									<input type="text" value="<?php if(isset($active)) : echo $active->getTitle(); endif; ?>" title="Introduce el nombre del menú aquí." class="menu-name regular-text menu-item-textbox input-with-default-title" id="menu-name" name="menu-name">
+								</label>
+														
+														<?php  if(!isset($active)) :?>		
+								<div class="publishing-action">
+									<button class="btn btn-primary menu-save" id="save_menu_header" name="save_menu">Crear menú</button>							
+								</div><!-- END .publishing-action -->
+								<?php endif; ?>
+								<?php  if(isset($active)) :?>
+								<div class="auto-add-pages">
+									<label class="howto"><input type="checkbox" value="1" name="auto-add-pages"> Añadir automáticamente las páginas de nivel superior</label>
+								</div>
+								<br class="clear">
+								
+								<div class="publishing-action">
+									<button class="btn btn-primary menu-save" id="save_menu_header" name="save_menu">Guardar menú</button>						
+								</div>
 
-			<div class="title">
+								<div class="delete-action">
+									<a href="http://localhost/wordpress/wp-admin/nav-menus.php?action=delete&amp;menu=4&amp;_wpnonce=136a713c7e" class="submitdelete deletion menu-delete">Eliminar menú</a>
+								</div>
+								<?php endif; ?>
+															</div><!-- END .major-publishing-actions -->
+						</div><!-- END #submitpost .submitbox -->
+						<input type="hidden" value="<?php if(isset($active)) : echo $active->getId(); else: echo 0; endif; ?>" id="menu" name="menu">
+					</div>
+				
+				<div id="post-body">
 
-				<h4>
-					<span class="icon16 icomoon-icon-bars"></span> <span>Visitors Chart</span>
-				</h4>
-				<a class="minimize" href="#" style="display: none;">Minimize</a>
+					<ul id="menu-to-edit" class="menu">
+						<?php if(isset($active)) : ?>
+						<?php $recursiveHydrator($active); ?>
+						<?php endif; ?>
+					</ul>
+
+				</div>
+
+				<div id="nav-menu-footer">
+					<div class="major-publishing-actions">
+						<div class="publishing-action">
+						<?php if(isset($active)):?>
+							<button id="save_menu_footer" class="btn btn-primary menu-save">Guardar
+								menú</button>
+						<?php endif; ?>
+						</div>
+					</div>
+				</div>
+			</form>
 			</div>
-			<div style="padding-bottom: 0px; display: block;" class="content">
-				contenido</div>
 
 		</div>
-		<!-- End .box -->
-
+		
+		</div><!-- End .box -->
 
 	</div>
 	<!-- End .span4 -->

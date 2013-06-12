@@ -29,8 +29,6 @@ class Options extends AbstractOptions
         'cache_dir'   => 'data/cache',
         'matcher'     => array(),
         'collectors' => array(
-            'exception' => 'JcNavigation\ExceptionCollector',
-            'config'    => 'JcNavigation\ConfigCollector',
         ),
     );
 
@@ -43,7 +41,6 @@ class Options extends AbstractOptions
         'position'      => 'bottom',
         'version_check' => false,
         'entries'       => array(
-            'memory'  => 'jc-navigation/toolbar/memory',
         ),
     );
 
@@ -131,7 +128,7 @@ class Options extends AbstractOptions
             }
         }
     }
-
+    
     /**
      * Is the Profiler enabled?
      *
