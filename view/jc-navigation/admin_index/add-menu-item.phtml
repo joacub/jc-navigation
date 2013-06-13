@@ -51,7 +51,7 @@ foreach($this->menuItems as $item): ?>
 
 				<div class="menu-item-actions description-wide submitbox">
 											<p class="link-to-original">
-							Original: <a href="<?php echo $this->url($item['collector']->getRouter(), $item['collector']->getRouterParams($item['entity'])) ?>"><?php echo $item['data']->getTitle(); ?></a>						</p>
+							Original: <a href="<?php echo $this->url($item['collector']->getRouter(), $item['collector']->getRouterParams($item['entity'])) ?>"><?php echo $item['collector']->getTitle($item['entity']); ?></a>						</p>
 										<a href="#" id="delete-<?php echo $item['data']->getId() ?>" class="item-delete submitdelete deletion">Eliminar</a> <span class="meta-sep"> | </span> <a href="#menu-item-settings-<?php echo $item['data']->getId() ?>" id="cancel-<?php echo $item['data']->getId() ?>" class="item-cancel submitcancel">Cancelar</a>
 				</div>
 
