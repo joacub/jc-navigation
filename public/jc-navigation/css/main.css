@@ -211,23 +211,23 @@ p.help, p.description, span.description, .form-wrap p {
 }
 
 .menu-item-depth-2 {
-    margin-left: 30px;
+    margin-left: 60px;
 }
 
 .menu-item-depth-3 {
-    margin-left: 30px;
+    margin-left: 90px;
 }
 
 .menu-item-depth-4 {
-    margin-left: 30px;
+    margin-left: 1200px;
 }
 
 .menu-item-depth-5 {
-    margin-left: 30px;
+    margin-left: 150px;
 }
 
 .menu-item-depth-6 {
-    margin-left: 30px;
+    margin-left: 180px;
 }
 
 #nav-menu-footer {
@@ -439,4 +439,8 @@ br.clear {
 
 #menu-management .nav-tabs-nav {
     margin: 0 20px;
+}
+
+.metabox-holder-disabled .box {
+    opacity: 0.5;
 }

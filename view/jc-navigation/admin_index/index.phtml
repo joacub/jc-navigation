@@ -15,9 +15,13 @@ $recursiveHydrator = function($entity) use(&$recursiveHydrator, $sm, $em, $repo,
 	
 	$children = $repo->getChildren($entity);
 	
+	
 	if(count($children)) {
-		foreach($children as $child)
-			$recursiveHydrator($child);
+		foreach($children as $child) {
+			$collector = $sm->get($collectors[$child->getCollector()]);
+			$originalEntity = $em->find($collector->getEntity(), $child->getReferenceId());
+			echo $this->partial('jc-navigation/admin_index/add-menu-item', array('menuItems' => array(array('data' => $child, 'entity' => $originalEntity, 'collector' => $collector))));
+		}
 	}
 	
 }
@@ -34,7 +38,7 @@ $recursiveHydrator = function($entity) use(&$recursiveHydrator, $sm, $em, $repo,
 
 <div class="row-fluid">
 	<div class="span4">
-		<div id="menu-settings-column">{jc-navigation-toolbar}</div>
+		<div id="menu-settings-column" class="metabox-holder<?php echo !$activeMenu ?  '-disabled' : ''?>">{jc-navigation-toolbar}</div>
 	</div>
 	<!-- End .span8 -->
 
@@ -48,7 +52,7 @@ $recursiveHydrator = function($entity) use(&$recursiveHydrator, $sm, $em, $repo,
 					<?php if($activeMenu == $navigation->getId()): $active = $navigation; ?>
 					<span class="nav-tab nav-tab-active"> <?php echo $navigation->getTitle() ?> </span>
 					<?php else: ?>
-					<a class="nav-tab" href="<?php echo $this->url('zfcadmin/JcNavigation', array(), array('query' => array('menu' => 2))) ?>">
+					<a class="nav-tab" href="<?php echo $this->url('zfcadmin/JcNavigation', array(), array('query' => array('menu' => $navigation->getId()))) ?>">
 						<?php echo $navigation->getTitle() ?> </a>
 					<?php endif; ?>
 					<?php endforeach; ?>
@@ -66,7 +70,7 @@ $recursiveHydrator = function($entity) use(&$recursiveHydrator, $sm, $em, $repo,
 				</div>
 				</div>
 <div class="menu-edit">
-			<form id="update-nav-menu" enctype="multipart/form-data"	method="post" action="<?php if(isset($active)): echo $this->url('zfcadmin/JcNavigation', array(), array('query' => array('menu' => $activeMenu))); else : echo $this->url('zfcadmin/JcNavigation', array('action' => 'create'), array('query' => array('menu' => $activeMenu))); endif; ?>">
+			<form id="update-nav-menu" enctype="multipart/form-data"	method="post" action="<?php if(isset($active)): echo $this->url('zfcadmin/JcNavigation', array('action' => 'update'), array('query' => array('menu' => $activeMenu))); else : echo $this->url('zfcadmin/JcNavigation', array('action' => 'create'), array('query' => array('menu' => $activeMenu))); endif; ?>">
 				
 				<div id="nav-menu-header">
 						<div class="submitbox" id="submitpost">

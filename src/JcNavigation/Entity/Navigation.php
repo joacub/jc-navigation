@@ -43,6 +43,12 @@ class Navigation
      * @ORM\Column(name="description", type="string", nullable=true)
      */
     protected $description;
+    
+    /**
+     * 
+     * @ORM\Column(name="url", type="string", nullable=true)
+     */
+    protected $url;
 
     /**
      * @Gedmo\TreeLeft
@@ -170,6 +176,22 @@ class Navigation
     public function setDescription ($description)
     {
     	$this->description = $description;
+    }
+    
+    /**
+     * @return the $url
+     */
+    public function getUrl ()
+    {
+    	return $this->url;
+    }
+    
+    /**
+     * @param field_type $url
+     */
+    public function setUrl ($url)
+    {
+    	$this->url = $url;
     }
     
     public function getLevel()

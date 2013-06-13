@@ -90,6 +90,73 @@ class Admin_IndexController extends AbstractActionController
     	return $this->redirect()->toRoute('zfcadmin/JcNavigation', array(), array('query' => array('menu' => $entity->getId())));
     }
     
+    public function updateAction()
+    {
+    	$em = $this->getEntityManager();
+    	$menuId = $this->params()->fromPost('menu', null);
+    	$menuName = $this->params()->fromPost('menu-name', null);
+    	$menu_item_db_id = $this->params()->fromPost('menu-item-db-id', null);
+    	$post = $this->params()->fromPost();
+    	 
+    	if($menuName === null || $menuId === null)
+    		return $this->redirect()->toRoute('zfcadmin/JcNavigation');
+    	
+    	$repo = $em->getRepository('JcNavigation\Entity\Navigation');
+    	 
+    	$menuEntity = $em->find('JcNavigation\Entity\Navigation', $menuId);
+    	
+    	$_children = $repo->getChildren($menuEntity);
+    	
+    	$children = array();
+    	foreach ($_children as $child) {
+    		$children[$child->getId()] = $child;
+    	}
+    	
+    	unset($_children);
+    	 
+    	$menuEntity->setTitle($menuName);
+    	 
+    	$em->persist($menuEntity);
+    	
+    	$postFields = array( 'menu-item-db-id', 'menu-item-object-id', 'menu-item-object', 'menu-item-parent-id', 'menu-item-position', 'menu-item-collector', 'menu-item-title', 'menu-item-url', 'menu-item-description', 'menu-item-attr-title', 'menu-item-target', 'menu-item-classes', 'menu-item-xfn' );
+		foreach ((array) $menu_item_db_id as $_key => $k) {
+			
+			// Menu item title can't be blank
+			if (empty($post['menu-item-title'][$_key]))
+				continue;
+			
+			$args = array();
+			foreach ($postFields as $field)
+				$args[$field] = isset($post[$field][$_key]) ? $post[$field][$_key] : '';
+			
+			
+			$item = $children[$args['menu-item-db-id']];
+			$item instanceof Navigation;
+			
+			$item->setTitle($args['menu-item-title']);
+			$item->setTitleAttribute($args['menu-item-attr-title']);
+			$item->setCss($args['menu-item-classes']);
+			$item->setDescription($args['menu-item-description']);
+			$item->setTarget((bool)$args['menu-item-target']);
+			
+			$parent = $em->find('JcNavigation\Entity\Navigation', $args['menu-item-parent-id']);
+			$item->setParent($parent);
+			
+			$em->persist($item);
+			
+			unset($children[$args['menu-item-db-id']]);
+			
+		}
+		
+		foreach ($children as $child) {
+			$em->remove($child);
+		}
+    	
+    	$em->flush();
+    	 
+    	return $this->redirect()->toRoute('zfcadmin/JcNavigation', array(), array('query' => array('menu' => $menuEntity->getId())));
+    }
+    
     public function addMenuItemAction() 
     {
     	$em = $this->getEntityManager();

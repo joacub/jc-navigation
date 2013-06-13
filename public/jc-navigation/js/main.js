@@ -638,6 +638,10 @@ var widgetInit = function() {
 			attachTabsPanelListeners : function() {
 				$('#menu-settings-column').bind('click', function(e) {
 					
+					//se desactiva cualquier accion ya que supuestamente no hay ningun menu
+					if($(this).hasClass('metabox-holder-disabled'))
+						return false;
+					
 					var selectAreaMatch, panelId, wrapper, items,
 						target = $(e.target);
 
