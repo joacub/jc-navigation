@@ -143,10 +143,15 @@ class Admin_IndexController extends AbstractActionController
 			$item->setParent($parent);
 			
 			$em->persist($item);
+			$em->flush($item);
+			$repo->moveDown($item, 1);
 			
 			unset($children[$args['menu-item-db-id']]);
 			
 		}
+		
+// 		
+
 		
 		foreach ($children as $child) {
 			$em->remove($child);
