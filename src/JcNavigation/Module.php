@@ -5,11 +5,14 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Nette\Diagnostics\Debugger;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
+use JcNavigation\View\Helper\Navigation;
 
 class Module implements
     ConfigProviderInterface,
     AutoloaderProviderInterface,
-    ServiceProviderInterface
+    ServiceProviderInterface,
+    ViewHelperProviderInterface
 {
 	
 	
@@ -43,6 +46,7 @@ class Module implements
     	return array(
     		'aliases' => array(
     			'JcNavigation\ReportInterface' => 'JcNavigation\Report',
+    			'jc_navigation_doctrine_em' => 'Doctrine\ORM\EntityManager'
     		),
     		'invokables' => array(
     			'JcNavigation\Report'             => 'JcNavigation\Report',
@@ -84,7 +88,20 @@ class Module implements
     			'JcNavigation\ProfilerListener' => function ($sm) {
     				return new Listener\ProfilerListener($sm, $sm->get('JcNavigation\Config'));
     			},
+    			'JcNavigation' => 'JcNavigation\Navigation\NavigationFactory'
     		),
+    	);
+    }
+    
+    public function getViewHelperConfig()
+    {
+    	return array(
+    		'factories' => array(
+    			'JcNavigation' => function($sm, $s) {
+    				$navigation = new Navigation();
+    				return $navigation;
+    			}
+    		)
     	);
     }
 }
