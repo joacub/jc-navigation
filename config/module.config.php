@@ -1,8 +1,6 @@
 <?php
 namespace JcNavigation;
 
-namespace JcNavigation;
-
 return array(
 	'doctrine' => array(
 		'driver' => array(
