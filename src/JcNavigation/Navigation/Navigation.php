@@ -8,6 +8,7 @@ use JcNavigation\Entity\Navigation as EntityNavigation;
 use JcNavigation\Collector\CollectorInterface;
 use Zend\Navigation\Exception\InvalidArgumentException;
 use Nette\Diagnostics\Debugger;
+use JcNavigation\Collector\AbstractEntityCollector;
 
 class Navigation extends DefaultNavigationFactory
 {
@@ -38,16 +39,31 @@ class Navigation extends DefaultNavigationFactory
 			$collector instanceof CollectorInterface;
 			
 			if($row->getLevel() != 0) {
-				$entity = $em->find($collector->getEntity(), $row->getReferenceId());
-				$array['jc_navigation_' . $row->getId()] = array(
-					'label' => $row->getTitle(),
-					'route' => $collector->getRouter(),
-					'params' => $collector->getRouterParams($entity),
-					'pages' => $this->buildNavigationArray($serviceLocator, $row),
-					'class' => $row->getCss(),
-					'target' => ($row->getTarget() ? '_blank' : null),
-					'title' => $row->getTitleAttribute()
-				);
+				switch (true) {
+					case $collector instanceof AbstractEntityCollector:
+						$entity = $em->find($collector->getEntity(), $row->getReferenceId());
+						$array['jc_navigation_' . $row->getId()] = array(
+							'label' => $row->getTitle(),
+							'route' => $collector->getRouter(),
+							'params' => $collector->getRouterParams($entity),
+							'pages' => $this->buildNavigationArray($serviceLocator, $row),
+							'class' => $row->getCss(),
+							'target' => ($row->getTarget() ? '_blank' : null),
+							'title' => $row->getTitleAttribute()
+						);
+						break;
+					case $collector instanceof AbstractEntityCollector:
+						$array['jc_navigation_' . $row->getId()] = array(
+							'label' => $row->getTitle(),
+							'uri' => $row->getUrl(),
+							'pages' => $this->buildNavigationArray($serviceLocator, $row),
+							'class' => $row->getCss(),
+							'target' => ($row->getTarget() ? '_blank' : null),
+							'title' => $row->getTitleAttribute()
+						);
+						break;
+				}
+				
 			} else {
 				$array['jc_navigation_' . $row->getId()] = array(
 					'label' => $row->getTitle(),
