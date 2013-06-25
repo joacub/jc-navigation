@@ -9,6 +9,7 @@ use JcNavigation\Collector\CollectorInterface;
 use Zend\Navigation\Exception\InvalidArgumentException;
 use Nette\Diagnostics\Debugger;
 use JcNavigation\Collector\AbstractEntityCollector;
+use JcNavigation\Collector\AbstractCollector;
 
 class Navigation extends DefaultNavigationFactory
 {
@@ -52,7 +53,7 @@ class Navigation extends DefaultNavigationFactory
 							'title' => $row->getTitleAttribute()
 						);
 						break;
-					case $collector instanceof AbstractEntityCollector:
+					case $collector instanceof AbstractCollector:
 						$array['jc_navigation_' . $row->getId()] = array(
 							'label' => $row->getTitle(),
 							'uri' => $row->getUrl(),
