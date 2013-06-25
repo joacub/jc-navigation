@@ -54,9 +54,10 @@ class Navigation extends DefaultNavigationFactory
 						);
 						break;
 					case $collector instanceof AbstractCollector:
+						
 						$array['jc_navigation_' . $row->getId()] = array(
 							'label' => $row->getTitle(),
-							'uri' => $row->getUrl(),
+							'uri' => (string) $row->getUrl(),
 							'pages' => $this->buildNavigationArray($serviceLocator, $row),
 							'class' => $row->getCss(),
 							'target' => ($row->getTarget() ? '_blank' : null),
