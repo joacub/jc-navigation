@@ -16,7 +16,7 @@ use Zend\Mvc\MvcEvent;
  */
 class UriCollector extends AbstractCollector
 {
-	const NAME     = 'jc_navigation_link_collector';
+	const NAME     = 'jc_navigation_links_collector';
 	
 	const PRIORITY = 150;
 	
