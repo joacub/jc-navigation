@@ -43,7 +43,10 @@ class Navigation extends DefaultNavigationFactory
 					'label' => $row->getTitle(),
 					'route' => $collector->getRouter(),
 					'params' => $collector->getRouterParams($entity),
-					'pages' => $this->buildNavigationArray($serviceLocator, $row)
+					'pages' => $this->buildNavigationArray($serviceLocator, $row),
+					'class' => $row->getCss(),
+					'target' => ($row->getTarget() ? '_blank' : null),
+					'title' => $row->getTitleAttribute()
 				);
 			} else {
 				$array['jc_navigation_' . $row->getId()] = array(

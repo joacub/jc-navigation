@@ -9,43 +9,32 @@ $pagesCount = count($pages);
 	<div class="title">
 
 		<h4>
-			<span>Páginas (<?php echo $pagesCount; ?>)</span>
+			<span>Enlaces personalizados</span>
 		</h4>
 		<a class="minimize" href="#" style="display: none;">Minimize</a>
 	</div>
 	<div style="padding-bottom: 0px; display: block;" class="content" id="page-menu">
-		<div class="tabbable">
 			<!-- Only required for left/right tabs -->
-			<ul class="nav nav-pills">
-				<li class="active"><a href="#tab1" data-toggle="tab">Mas recientes</a>
-				</li>
-				<li><a href="#tab2" data-toggle="tab">Todas</a></li>
-				<li><a href="#tab3" data-toggle="tab">Buscar</a></li>
-			</ul>
 
-			<div class="tab-content">
-				<div class="tab-pane active" id="tab1">
-					<ul class="unstyled categorychecklist" data-wp-lists="list:page" id="pagechecklist">
-					<?php foreach ($pages as $page): ?>
-					<?php $jsonData = Json::encode(array('collector' => 'jc_blog_pages_collector', 'id' => $page->getId())); ?>
-						<li>
+					<?php $jsonData = Json::encode(array('collector' => 'jc_navigation_links_collector')); ?>
 						
-							<label class="menu-item-title"><input type="checkbox"
-								value='<?php echo $jsonData ?>' name="menu-item"> <?php echo $page->getTitle() ?></label>
+							<input type="hidden"
+								value='<?php echo $jsonData ?>' name="menu-item">
 								
-							
-						</li>
-					<?php endforeach; ?>
-					</ul>
-				</div>
-				<div class="tab-pane" id="tab2">
-					<p>Howdy, I'm in Section 2.</p>
-				</div>
-				<div class="tab-pane" id="tab3">
-					<p>Howdy, I'm in Section 3.</p>
-				</div>
-			</div>
-		</div>
+								<p id="menu-item-url-wrap">
+									<label for="custom-menu-item-url" class="howto">
+										<span>URL</span>
+										<input type="text" value="http://" class="code menu-item-textbox" name="menu-item[-1][menu-item-url]" id="custom-menu-item-url">
+									</label>
+								</p>
+					
+								<p id="menu-item-name-wrap">
+									<label for="custom-menu-item-name" class="howto">
+										<span>Etiqueta</span>
+										<input type="text" title="Elemento del menú" class="regular-text menu-item-textbox input-with-default-title" name="menu-item[-1][menu-item-title]" id="custom-menu-item-name">
+									</label>
+								</p>
+					
 
 
 		<button id="submit-page-menu" class="btn btn-primary submit-add-to-menu" type="button">Añadir páginas</button>
