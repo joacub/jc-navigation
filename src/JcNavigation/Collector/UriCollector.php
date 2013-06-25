@@ -10,32 +10,29 @@
 namespace JcNavigation\Collector;
 
 use Zend\Mvc\MvcEvent;
-
 /**
- * Collector Interface.
+ * Serializable Collector base class.
  *
  */
-interface CollectorInterface
+class UriCollector extends AbstractCollector
 {
-    /**
-     * Collector Name.
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Collector Priority.
-     *
-     * @return integer
-     */
-    public function getPriority();
-
-    /**
-     * Collects data.
-     *
-     * @param MvcEvent $mvcEvent
-     */
-    public function collect(MvcEvent $mvcEvent);
+	const NAME     = 'jc_navigation_link_collector';
+	
+	const PRIORITY = 150;
+	
+	public function getName()
+	{
+		return self::NAME;
+	}
+	
+	public function getPriority()
+	{
+		return self::PRIORITY;
+	}
+	
+	public function collect(MvcEvent $mvcEvent)
+	{
+		
+	}
     
 }

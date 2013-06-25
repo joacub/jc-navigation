@@ -9,33 +9,32 @@
 
 namespace JcNavigation\Collector;
 
-use Zend\Mvc\MvcEvent;
-
 /**
- * Collector Interface.
+ * Serializable Collector base class.
  *
  */
-interface CollectorInterface
+abstract class AbstractEntityCollector implements CollectorEntityInterface, \Serializable
 {
     /**
-     * Collector Name.
+     * Collected Data
      *
-     * @return string
+     * @var array
      */
-    public function getName();
+    protected $data;
 
     /**
-     * Collector Priority.
-     *
-     * @return integer
+     * @see \Serializable
      */
-    public function getPriority();
+    public function serialize()
+    {
+        return serialize($this->data);
+    }
 
     /**
-     * Collects data.
-     *
-     * @param MvcEvent $mvcEvent
+     * @see \Serializable
      */
-    public function collect(MvcEvent $mvcEvent);
-    
+    public function unserialize($data)
+    {
+        $this->data = unserialize($data);
+    }
 }

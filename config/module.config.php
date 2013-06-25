@@ -64,4 +64,16 @@ return array(
 			),
 		),
 	),
+	'JcNavigation' => array(
+		'profiler' => array(
+			'collectors' => array(
+				'jc_navigation_links_collector' => 'JcNavigation\\Collector\\UriCollector'
+			)
+		),
+		'toolbar' => array(
+			'entries' => array(
+				'jc_navigation_links_collector' => 'jc-navigation/toolbar/jc-navigation-links'
+			)
+		)
+	)
 );

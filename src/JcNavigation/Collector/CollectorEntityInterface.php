@@ -9,33 +9,26 @@
 
 namespace JcNavigation\Collector;
 
-use Zend\Mvc\MvcEvent;
-
 /**
  * Collector Interface.
  *
  */
-interface CollectorInterface
+interface CollectorEntityInterface extends CollectorInterface
 {
     /**
-     * Collector Name.
+     * Collects entity.
      *
-     * @return string
      */
-    public function getName();
-
+    public function getEntity();
+    
     /**
-     * Collector Priority.
-     *
-     * @return integer
+     * Collects router.
      */
-    public function getPriority();
-
+    public function getRouter();
+    
     /**
-     * Collects data.
-     *
-     * @param MvcEvent $mvcEvent
+     * devuelve los parametros necesrios para formar la ruta
      */
-    public function collect(MvcEvent $mvcEvent);
+    public function getRouterParams($entity);
     
 }

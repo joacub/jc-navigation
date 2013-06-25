@@ -21,18 +21,18 @@ foreach($this->menuItems as $item): ?>
 				<p class="description description-thin">
 					<label for="edit-menu-item-attr-title-<?php echo $item['data']->getId() ?>">
 						Atributos del título<br>
-						<input type="text" value="" original-value="" name="menu-item-attr-title[<?php echo $item['data']->getId() ?>]" class="widefat edit-menu-item-attr-title" id="edit-menu-item-attr-title-<?php echo $item['data']->getId() ?>">
+						<input type="text" value="<?php echo $item['data']->getTitleAttribute() ?>" original-value="" name="menu-item-attr-title[<?php echo $item['data']->getId() ?>]" class="widefat edit-menu-item-attr-title" id="edit-menu-item-attr-title-<?php echo $item['data']->getId() ?>">
 					</label>
 				</p>
 				<p class="field-link-target description hidden-field">
 					<label for="edit-menu-item-target-<?php echo $item['data']->getId() ?>">
-						<input type="checkbox" name="menu-item-target[<?php echo $item['data']->getId() ?>]" original-value="false" value="_blank" id="edit-menu-item-target-<?php echo $item['data']->getId() ?>">
+						<input type="checkbox" <?php echo $item['data']->getTarget() ? 'checked="checked"' : '' ?> name="menu-item-target[<?php echo $item['data']->getId() ?>]" original-value="false" value="_blank" id="edit-menu-item-target-<?php echo $item['data']->getId() ?>">
 						Abrir enlace en una nueva ventana/pestaña					</label>
 				</p>
 				<p class="field-css-classes description description-thin hidden-field">
 					<label for="edit-menu-item-classes-<?php echo $item['data']->getId() ?>">
 						Clases CSS (opcional)<br>
-						<input type="text" value="" name="menu-item-classes[<?php echo $item['data']->getId() ?>]" class="widefat code edit-menu-item-classes" id="edit-menu-item-classes-<?php echo $item['data']->getId() ?>">
+						<input type="text" value="<?php echo $item['data']->getCss() ?>" name="menu-item-classes[<?php echo $item['data']->getId() ?>]" class="widefat code edit-menu-item-classes" id="edit-menu-item-classes-<?php echo $item['data']->getId() ?>">
 					</label>
 				</p>
 				<p class="field-xfn description description-thin hidden-field">
@@ -44,7 +44,7 @@ foreach($this->menuItems as $item): ?>
 				<p class="field-description description description-wide hidden-field">
 					<label for="edit-menu-item-description-<?php echo $item['data']->getId() ?>">
 						Descripción<br>
-						<textarea name="menu-item-description[<?php echo $item['data']->getId() ?>]" cols="20" rows="3" class="widefat edit-menu-item-description" id="edit-menu-item-description-<?php echo $item['data']->getId() ?>"></textarea>
+						<textarea name="menu-item-description[<?php echo $item['data']->getId() ?>]" cols="20" rows="3" class="widefat edit-menu-item-description" id="edit-menu-item-description-<?php echo $item['data']->getId() ?>"><?php echo $item['data']->getDescription() ?></textarea>
 						<span class="description">La descripción se mostrará en los menús si el tema actual lo soporta.</span>
 					</label>
 				</p>
