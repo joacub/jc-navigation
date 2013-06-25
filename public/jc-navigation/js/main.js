@@ -574,7 +574,7 @@ var widgetInit = function() {
 
 				api.addItemToMenu({
 					'-1': {
-						'menu-item-type': 'custom',
+						'collector': 'jc_navigation_links_collector',
 						'menu-item-url': url,
 						'menu-item-title': label
 					}

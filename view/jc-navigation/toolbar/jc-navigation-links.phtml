@@ -16,11 +16,6 @@ $pagesCount = count($pages);
 	<div style="padding-bottom: 0px; display: block;" class="content" id="page-menu">
 			<!-- Only required for left/right tabs -->
 
-					<?php $jsonData = Json::encode(array('collector' => 'jc_navigation_links_collector')); ?>
-						
-							<input type="hidden"
-								value='<?php echo $jsonData ?>' name="menu-item">
-								
 								<p id="menu-item-url-wrap">
 									<label for="custom-menu-item-url" class="howto">
 										<span>URL</span>
@@ -37,7 +32,7 @@ $pagesCount = count($pages);
 					
 
 
-		<button id="submit-page-menu" class="btn btn-primary submit-add-to-menu" type="button">Añadir páginas</button>
+		<button id="submit-customlinkdiv" class="btn btn-primary submit-add-to-menu" type="button">Añadir páginas</button>
 		<br style="clear: both;"> <br style="clear: both;">
 	</div>
 

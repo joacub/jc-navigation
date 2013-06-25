@@ -1,5 +1,6 @@
 <?php
 use Nette\Diagnostics\Debugger;
+use JcNavigation\Collector\AbstractEntityCollector;
 $this->headLink()->prependStylesheet(
 		$this->basepath('/jc-navigation/css/main.css'));
 $this->inlinescript()->appendFile(
@@ -19,7 +20,10 @@ $recursiveHydrator = function($entity) use(&$recursiveHydrator, $sm, $em, $repo,
 	if(count($children)) {
 		foreach($children as $child) {
 			$collector = $sm->get($collectors[$child->getCollector()]);
-			$originalEntity = $em->find($collector->getEntity(), $child->getReferenceId());
+			$originalEntity = false;
+			if($collector instanceof AbstractEntityCollector) {
+				$originalEntity = $em->find($collector->getEntity(), $child->getReferenceId());
+			}
 			echo $this->partial('jc-navigation/admin_index/add-menu-item', array('menuItems' => array(array('data' => $child, 'entity' => $originalEntity, 'collector' => $collector))));
 		}
 	}

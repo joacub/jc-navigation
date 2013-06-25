@@ -7,6 +7,8 @@ use JcNavigation\Exception\InvalidOptionException;
 use JcNavigation\Exception\ProfilerException;
 use Nette\Diagnostics\Debugger;
 use JcNavigation\Entity\Navigation;
+use JcNavigation\Collector\AbstractEntityCollector;
+use JcNavigation\Collector\AbstractCollector;
 
 class Admin_IndexController extends AbstractActionController
 {
@@ -208,14 +210,24 @@ class Admin_IndexController extends AbstractActionController
 			foreach ($items as &$item) {
 				$collector = $this->getServiceLocator()->get(
 						$collectors[$item['collector']]);
-				
-				$entity = $em->find($collector->getEntity(), $item['id']);
-				
-				$entityNavigation = new Navigation();
-				$entityNavigation->setTitle($collector->getTitle($entity));
-				$entityNavigation->setCollector($collector->getName());
-				$entityNavigation->setParent($menuEntity);
-				$entityNavigation->setReferenceId($item['id']);
+				$entity = null;
+				switch (true) {
+					case $collector instanceof AbstractEntityCollector:
+						$entity = $em->find($collector->getEntity(), $item['id']);
+						
+						$entityNavigation = new Navigation();
+						$entityNavigation->setTitle($collector->getTitle($entity));
+						$entityNavigation->setCollector($collector->getName());
+						$entityNavigation->setParent($menuEntity);
+						$entityNavigation->setReferenceId($item['id']);
+						break;
+					case $collector instanceof AbstractCollector:
+						$entityNavigation = new Navigation();
+						$entityNavigation->setTitle($item['menu-item-title']);
+						$entityNavigation->setCollector($collector->getName());
+						$entityNavigation->setParent($menuEntity);
+						break;
+				}
 				
 				$em->persist($entityNavigation);
 				$em->flush($entityNavigation);
