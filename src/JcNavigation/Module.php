@@ -59,6 +59,7 @@ class Module implements
     			'JcNavigation\MemoryCollector'    => 'JcNavigation\Collector\MemoryCollector',
     			'JcNavigation\TimeCollector'      => 'JcNavigation\Collector\TimeCollector',
     			'JcNavigation\FlushListener'      => 'JcNavigation\Listener\FlushListener',
+    			'JcNavigation\Collector\UriCollector' => 'JcNavigation\Collector\UriCollector'
     		),
     		'factories' => array(
     			'JcNavigation\Profiler' => function ($sm) {
