@@ -1,5 +1,6 @@
 <?php 
 use JcNavigation\Collector\AbstractEntityCollector;
+use JcNavigation\Collector\AbstractCollector;
 foreach($this->menuItems as $item): ?>
 
 <li id="menu-item-<?php echo $item['data']->getId() ?>" class="menu-item menu-item-depth-<?php echo ($item['data']->getLevel() - 1); ?> menu-item-page menu-item-edit-inactive pending">
@@ -14,6 +15,14 @@ foreach($this->menuItems as $item): ?>
 					</div>
 					
 				<div class="content menu-item-settings" style="padding-bottom: 0px; display: none;">
+				<?php if($item['collector'] instanceof AbstractCollector): ?>
+				<p class="field-url description description-wide">
+						<label for="edit-menu-item-url-<?php echo $item['data']->getId() ?>">
+							URL<br>
+							<input type="text" value="<?php echo $item['data']->getUrl() ?>" original-value="<?php echo $item['data']->getUrl(); ?>" name="menu-item-url[<?php echo $item['data']->getId() ?>]" class="widefat code edit-menu-item-url" id="edit-menu-item-url-<?php echo $item['data']->getId() ?>">
+						</label>
+					</p>
+				<?php endif; ?>
 								<p class="description description-thin">
 					<label for="edit-menu-item-title-<?php echo $item['data']->getId() ?>">
 						Etiqueta de navegación<br>
@@ -51,13 +60,14 @@ foreach($this->menuItems as $item): ?>
 					</label>
 				</p>
 
-				<?php if($item['collector'] instanceof AbstractEntityCollector): ?>
 				<div class="menu-item-actions description-wide submitbox">
-											<p class="link-to-original">
-							Original: <a href="<?php echo $this->url($item['collector']->getRouter(), $item['collector']->getRouterParams($item['entity'])) ?>"><?php echo $item['collector']->getTitle($item['entity']); ?></a>						</p>
+				<?php if($item['collector'] instanceof AbstractEntityCollector): ?>
+							<p class="link-to-original">
+							Original: <a href="<?php echo $this->url($item['collector']->getRouter(), $item['collector']->getRouterParams($item['entity'])) ?>"><?php echo $item['collector']->getTitle($item['entity']); ?></a>						
+							</p>
+				<?php endif; ?>
 										<a href="#" id="delete-<?php echo $item['data']->getId() ?>" class="item-delete submitdelete deletion">Eliminar</a> <span class="meta-sep"> | </span> <a href="#menu-item-settings-<?php echo $item['data']->getId() ?>" id="cancel-<?php echo $item['data']->getId() ?>" class="item-cancel submitcancel">Cancelar</a>
 				</div>
-				<?php endif; ?>
 
 				<input type="hidden" value="<?php echo $item['data']->getId() ?>" name="menu-item-db-id[<?php echo $item['data']->getId() ?>]" class="menu-item-data-db-id">
 				<input type="hidden" value="<?php echo $item['entity'] ? $item['entity']->getId() : '' ?>" name="menu-item-object-id[<?php echo $item['data']->getId() ?>]" class="menu-item-data-object-id">

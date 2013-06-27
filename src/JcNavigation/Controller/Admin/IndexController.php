@@ -169,6 +169,7 @@ class Admin_IndexController extends AbstractActionController
 			$item->setCss($args['menu-item-classes']);
 			$item->setDescription($args['menu-item-description']);
 			$item->setTarget((bool) $args['menu-item-target']);
+			$item->setUrl($args['menu-item-url']);
 			
 			$parent = $em->find('JcNavigation\Entity\Navigation', 
 					$args['menu-item-parent-id']);
@@ -226,6 +227,7 @@ class Admin_IndexController extends AbstractActionController
 						$entityNavigation->setTitle($item['menu-item-title']);
 						$entityNavigation->setCollector($collector->getName());
 						$entityNavigation->setParent($menuEntity);
+						$entityNavigation->setUrl($item['menu-item-url']);
 						break;
 				}
 				
