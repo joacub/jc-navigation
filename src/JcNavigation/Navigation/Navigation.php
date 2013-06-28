@@ -38,10 +38,6 @@ class Navigation extends DefaultNavigationFactory
             if (isset($collectors[$row['collector']]))
                 $collector = $serviceLocator->get($collectors[$row['collector']]);
             $collector instanceof CollectorInterface;
-            if(!isset($row['lvl'])) {
-            	Debugger::dump($row);
-                exit;
-            }
             if ($row['lvl'] != 0) {
                 switch (true) {
                     case $collector instanceof AbstractEntityCollector:
@@ -53,7 +49,8 @@ class Navigation extends DefaultNavigationFactory
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
-                            'title' => $row['titleAttribute']
+                            'title' => $row['titleAttribute'],
+                            'description' => $row['description']
                         );
                         break;
                     case $collector instanceof AbstractCollector:
@@ -64,7 +61,8 @@ class Navigation extends DefaultNavigationFactory
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
-                            'title' => $row['titleAttribute']
+                            'title' => $row['titleAttribute'],
+                            'description' => $row['description']
                         );
                         break;
                 }
