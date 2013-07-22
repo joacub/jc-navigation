@@ -177,7 +177,12 @@ class Admin_IndexController extends AbstractActionController
 			
 			$em->persist($item);
 			$em->flush($item);
+			try {
 			$repo->moveDown($item, 1);
+			} catch(\Exception $e) {
+			    Debugger::dump($item);
+				exit;
+			} 
 			
 			unset($children[$args['menu-item-db-id']]);
 		}
