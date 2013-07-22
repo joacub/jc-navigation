@@ -152,8 +152,6 @@ class Admin_IndexController extends AbstractActionController
 			'menu-item-xfn'
 		);
 		
-		$first = true;
-		
 		foreach ((array) $menu_item_db_id as $_key => $k) {
 		    
 			// Menu item title can't be blank
@@ -179,16 +177,8 @@ class Admin_IndexController extends AbstractActionController
 			$item->setParent($parent);
 			
 			$em->persist($item);
-			$em->flush();
-			try {
-			    if(!$first)
-			     $repo->moveDown($item, 1);
-			} catch(\Exception $e) {
-			    Debugger::dump($item);
-			    Debugger::dump($parent);
-			    echo $e->getMessage();
-				exit;
-			} 
+			$em->flush($item);
+			$repo->persistAsLastChildOf($item, $parent);
 			
 			unset($children[$args['menu-item-db-id']]);
 			
