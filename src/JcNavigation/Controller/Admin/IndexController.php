@@ -181,7 +181,7 @@ class Admin_IndexController extends AbstractActionController
 			$em->persist($item);
 			$em->flush($item);
 			
-			$repo->persistAsFirstChildOf($item, $parent);
+			$repo->moveDown($item, true);
 			
 			unset($children[$args['menu-item-db-id']]);
 			
