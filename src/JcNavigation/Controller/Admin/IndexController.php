@@ -151,8 +151,11 @@ class Admin_IndexController extends AbstractActionController
 			'menu-item-classes',
 			'menu-item-xfn'
 		);
+		
+		$first = true;
+		
 		foreach ((array) $menu_item_db_id as $_key => $k) {
-			
+		    
 			// Menu item title can't be blank
 			if (empty($post['menu-item-title'][$_key]))
 				continue;
@@ -178,7 +181,8 @@ class Admin_IndexController extends AbstractActionController
 			$em->persist($item);
 			$em->flush();
 			try {
-			$repo->moveDown($item, 1);
+			    if(!$first)
+			     $repo->moveDown($item, 1);
 			} catch(\Exception $e) {
 			    Debugger::dump($item);
 			    Debugger::dump($parent);
@@ -187,6 +191,8 @@ class Admin_IndexController extends AbstractActionController
 			} 
 			
 			unset($children[$args['menu-item-db-id']]);
+			
+			$first = false;
 		}
 		
 		foreach ($children as $child) {
