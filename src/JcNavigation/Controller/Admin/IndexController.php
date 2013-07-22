@@ -181,6 +181,7 @@ class Admin_IndexController extends AbstractActionController
 			$repo->moveDown($item, 1);
 			} catch(\Exception $e) {
 			    Debugger::dump($item);
+			    echo $e->getMessage();
 				exit;
 			} 
 			
