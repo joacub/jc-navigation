@@ -114,6 +114,7 @@ class Admin_IndexController extends AbstractActionController
 		$menuId = $this->params()->fromPost('menu', null);
 		$menuName = $this->params()->fromPost('menu-name', null);
 		$menu_item_db_id = $this->params()->fromPost('menu-item-db-id', null);
+		
 		$post = $this->params()->fromPost();
 		
 		if ($menuName === null || $menuId === null)
@@ -178,7 +179,8 @@ class Admin_IndexController extends AbstractActionController
 			
 			$em->persist($item);
 			$em->flush($item);
-			$repo->persistAsLastChildOf($item, $parent);
+			
+			$repo->moveDown($item, 1);
 			
 			unset($children[$args['menu-item-db-id']]);
 			
