@@ -176,7 +176,7 @@ class Admin_IndexController extends AbstractActionController
 			$item->setParent($parent);
 			
 			$em->persist($item);
-			$em->flush($item);
+			$em->flush();
 			try {
 			$repo->moveDown($item, 1);
 			} catch(\Exception $e) {
