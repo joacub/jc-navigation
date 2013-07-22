@@ -153,8 +153,9 @@ class Admin_IndexController extends AbstractActionController
 			'menu-item-xfn'
 		);
 		
+		$downCount = 0;
 		foreach ((array) $menu_item_db_id as $_key => $k) {
-		    
+		    $downCount++;
 			// Menu item title can't be blank
 			if (empty($post['menu-item-title'][$_key]))
 				continue;
@@ -180,7 +181,7 @@ class Admin_IndexController extends AbstractActionController
 			$em->persist($item);
 			$em->flush($item);
 			
-			$repo->moveDown($item, 1);
+			$repo->moveDown($item, $downCount);
 			
 			unset($children[$args['menu-item-db-id']]);
 			
