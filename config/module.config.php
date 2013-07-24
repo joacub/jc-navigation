@@ -57,7 +57,7 @@ return array(
 	'navigation' => array(
 		'admin' => array(
 			'jc-navigation' => array(
-				'label' => 'Menús de nevagación',
+				'label' => 'Menús de navegación',
 				'route' => 'zfcadmin/' . __NAMESPACE__,
 			),
 		),
