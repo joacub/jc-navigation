@@ -14,6 +14,8 @@ use JcNavigation\Collector\AbstractCollector;
 class Navigation extends DefaultNavigationFactory
 {
 
+	private $requestUri;
+	
     private function buildNavigationArray($serviceLocator, $node = null)
     {
         // FETCH data from table menu :
@@ -43,6 +45,7 @@ class Navigation extends DefaultNavigationFactory
                     case $collector instanceof AbstractEntityCollector:
                         $entity = $em->find($collector->getEntity(), $row['referenceId']);
                         $array['jc_navigation_' . $row['id']] = array(
+                        	'id' => 'jc_navigation_' . $row['id'],
                             'label' => $row['title'],
                             'route' => $collector->getRouter(),
                             'params' => $collector->getRouterParams($entity),
@@ -50,24 +53,27 @@ class Navigation extends DefaultNavigationFactory
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
                             'title' => $row['titleAttribute'],
-                            'description' => $row['description']
+                            'description' => $row['description'],
                         );
                         break;
                     case $collector instanceof AbstractCollector:
                         $url = (string) $row['url'];
+                        $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->basePath($url));
                         $array['jc_navigation_' . $row['id']] = array(
+                        	'id' => 'jc_navigation_' . $row['id'],
                             'label' => $row['title'],
-                            'uri' => (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->basePath($url)),
+                            'uri' => $url,
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
                             'title' => $row['titleAttribute'],
-                            'description' => $row['description']
+                            'description' => $row['description'],
+                        	'active' => ($this->getRequestUri() === $url)
                         );
-                        break;
                 }
             } else {
                 $array['jc_navigation_' . $row['id']] = array(
+                	'id' => 'jc_navigation_' . $row['id'],
                     'label' => $row['title'],
                     'uri' => '',
                     'pages' => $this->buildNavigationArray($serviceLocator, $row)
@@ -79,6 +85,8 @@ class Navigation extends DefaultNavigationFactory
 
     protected function getPages(ServiceLocatorInterface $serviceLocator)
     {
+    	$router = $serviceLocator->get('router');
+    	$this->setRequestUri($router->getRequestUri()->getPath());
         if (null === $this->pages) {
             
             $configuration['navigation'][$this->getName()] = $this->buildNavigationArray($serviceLocator);
@@ -98,5 +106,15 @@ class Navigation extends DefaultNavigationFactory
 			$this->pages = $this->injectComponents($pages, $routeMatch, $router);
 		}
 		return $this->pages;
+	}
+	
+	private function getRequestUri()
+	{
+		return $this->requestUri;
+	}
+	
+	private function setRequestUri($requestUri)
+	{
+		$this->requestUri = $requestUri;
 	}
 }
