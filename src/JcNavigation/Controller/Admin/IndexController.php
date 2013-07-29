@@ -188,11 +188,13 @@ class Admin_IndexController extends AbstractActionController
 			$first = false;
 		}
 		
+		$em->flush();
+		
 		foreach ($children as $child) {
-			$em->remove($child);
+			$repo->removeFromTree($child);
+			$em->clear(); // clear cached nodes
 		}
 		
-		$em->flush();
 		
 		return $this->redirect()->toRoute('zfcadmin/JcNavigation', array(), 
 				array(
