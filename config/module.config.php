@@ -56,10 +56,15 @@ return array(
 	),
 	'navigation' => array(
 		'admin' => array(
-			'jc-navigation' => array(
-				'label' => 'Menús de navegación',
-				'route' => 'zfcadmin/' . __NAMESPACE__,
-			),
+			'settings' => array(
+				'label' => 'Ajustes',
+				'uri' => '#',
+				'pages' => array(
+					'jc-navigation' => array(
+						'label' => 'Menús de navegación',
+						'route' => 'zfcadmin/' . __NAMESPACE__,
+					),				)
+			)
 		),
 	),
 	'JcNavigation' => array(
