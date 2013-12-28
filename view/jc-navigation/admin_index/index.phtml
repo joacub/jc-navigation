@@ -19,6 +19,8 @@ $recursiveHydrator = function($entity) use(&$recursiveHydrator, $sm, $em, $repo,
 	
 	if(count($children)) {
 		foreach($children as $child) {
+		    if(!isset($collectors[$child->getCollector()]))
+		        continue;
 			$collector = $sm->get($collectors[$child->getCollector()]);
 			$originalEntity = false;
 			if($collector instanceof AbstractEntityCollector) {
