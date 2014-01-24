@@ -592,9 +592,7 @@ var widgetInit = function() {
 					'menu-item': menuItem
 				};
 				
-				console.log(params);
-
-				$.post( site_url + '/admin/JcNavigation/add-menu-item', params, function(menuMarkup) {
+				$.post( site_url + '/es/admin/JcNavigation/add-menu-item', params, function(menuMarkup) {
 					var ins = $('#menu-instructions');
 					processMethod(menuMarkup, params);
 					if( ! ins.hasClass('menu-instructions-inactive') && ins.siblings().length )
