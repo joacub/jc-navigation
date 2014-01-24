@@ -591,6 +591,8 @@ var widgetInit = function() {
 					'menu': menu,
 					'menu-item': menuItem
 				};
+				
+				console.log(params);
 
 				$.post( site_url + '/admin/JcNavigation/add-menu-item', params, function(menuMarkup) {
 					var ins = $('#menu-instructions');
