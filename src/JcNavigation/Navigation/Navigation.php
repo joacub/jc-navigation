@@ -20,6 +20,7 @@ class Navigation extends DefaultNavigationFactory
     {
         // FETCH data from table menu :
         $em = $serviceLocator->get('jc_navigation_doctrine_em');
+        $translator = $serviceLocator->get('translator');
         $em instanceof EntityManager;
         $repo = $em->getRepository('JcNavigation\Entity\Navigation');
         
@@ -44,16 +45,20 @@ class Navigation extends DefaultNavigationFactory
                 switch (true) {
                     case $collector instanceof AbstractEntityCollector:
                         $entity = $em->find($collector->getEntity(), $row['referenceId']);
+                        if(method_exists($entity, 'setLocale')) {
+                            $entity->setLocale(\Locale::getDefault());
+                            $em->refresh($entity);
+                        }
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
-                            'label' => $row['title'],
+                            'label' => $translator->translate($row['title']),
                             'route' => $collector->getRouter(),
                             'params' => $collector->getRouterParams($entity),
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
-                            'title' => $row['titleAttribute'],
-                            'description' => $row['description'],
+                            'title' => $translator->translate($row['titleAttribute']),
+                            'description' => $translator->translate($row['description']),
                         );
                         break;
                     case $collector instanceof AbstractCollector:
@@ -61,20 +66,20 @@ class Navigation extends DefaultNavigationFactory
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->basePath($url));
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
-                            'label' => $row['title'],
+                            'label' => $translator->translate($row['title']),
                             'uri' => $url,
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
-                            'title' => $row['titleAttribute'],
-                            'description' => $row['description'],
+                            'title' => $translator->translate($row['titleAttribute']),
+                            'description' => $translator->translate($row['description']),
                         	'active' => ($this->getRequestUri() === $url)
                         );
                 }
             } else {
                 $array['jc_navigation_' . $row['id']] = array(
                 	'id' => 'jc_navigation_' . $row['id'],
-                    'label' => $row['title'],
+                    'label' => $translator->translate($row['title']),
                     'uri' => '',
                     'pages' => $this->buildNavigationArray($serviceLocator, $row)
                 );
