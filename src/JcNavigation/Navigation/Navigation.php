@@ -71,7 +71,7 @@ class Navigation extends DefaultNavigationFactory
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
                             'label' => $translator->translate((string)$row['title']),
-                            'uri' => ($detector ? $detector->assemble(\Locale::getDefault(), $url)->toString() : $url),
+                            'uri' => ($detector ? $detector->assemble(\Locale::getDefault(), '/' . \Locale::getDefault() . $url)->toString() : $url),
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
