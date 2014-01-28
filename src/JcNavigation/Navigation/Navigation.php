@@ -23,6 +23,10 @@ class Navigation extends DefaultNavigationFactory
         $translator = $serviceLocator->get('translator');
         $em instanceof EntityManager;
         $repo = $em->getRepository('JcNavigation\Entity\Navigation');
+        $detector = false;
+        if($serviceLocator->has('SlmLocale\Locale\Detector')) {
+            $detector = $serviceLocator->get('SlmLocale\Locale\Detector');
+        }
         
         if ($node === null) {
             $node = $repo->childrenHierarchy();
@@ -67,7 +71,7 @@ class Navigation extends DefaultNavigationFactory
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
                             'label' => $translator->translate((string)$row['title']),
-                            'uri' => $url,
+                            'uri' => $detector ? $detector->assemble(\Locale::getDefault(), $url) : $url,
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
