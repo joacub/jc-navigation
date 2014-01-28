@@ -51,14 +51,14 @@ class Navigation extends DefaultNavigationFactory
                         }
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
-                            'label' => $translator->translate($row['title']),
+                            'label' => $translator->translate((string)$row['title']),
                             'route' => $collector->getRouter(),
                             'params' => $collector->getRouterParams($entity),
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
-                            'title' => $translator->translate($row['titleAttribute']),
-                            'description' => $translator->translate($row['description']),
+                            'title' => $translator->translate((string)$row['titleAttribute']),
+                            'description' => $translator->translate((string)$row['description']),
                         );
                         break;
                     case $collector instanceof AbstractCollector:
@@ -66,20 +66,20 @@ class Navigation extends DefaultNavigationFactory
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->basePath($url));
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
-                            'label' => $translator->translate($row['title']),
+                            'label' => $translator->translate((string)$row['title']),
                             'uri' => $url,
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
                             'target' => ($row['target'] ? '_blank' : null),
-                            'title' => $translator->translate($row['titleAttribute']),
-                            'description' => $translator->translate($row['description']),
+                            'title' => $translator->translate((string)$row['titleAttribute']),
+                            'description' => $translator->translate((string)$row['description']),
                         	'active' => ($this->getRequestUri() === $url)
                         );
                 }
             } else {
                 $array['jc_navigation_' . $row['id']] = array(
                 	'id' => 'jc_navigation_' . $row['id'],
-                    'label' => $translator->translate($row['title']),
+                    'label' => $translator->translate((string)$row['title']),
                     'uri' => '',
                     'pages' => $this->buildNavigationArray($serviceLocator, $row)
                 );
