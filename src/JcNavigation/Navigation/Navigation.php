@@ -44,6 +44,10 @@ class Navigation extends DefaultNavigationFactory
                 switch (true) {
                     case $collector instanceof AbstractEntityCollector:
                         $entity = $em->find($collector->getEntity(), $row['referenceId']);
+                        if(method_exists($entity, 'setLocale')) {
+                            $entity->setLocale(\Locale::getDefault());
+                            $em->refresh($entity);
+                        }
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
                             'label' => $row['title'],
