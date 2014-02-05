@@ -72,11 +72,11 @@ class Navigation extends DefaultNavigationFactory
                         if($url == '/')
                             $url = '';
                         
-//                         try {
+                        try {
                         $url = ($detector ? $detector->assemble(\Locale::getDefault(), '/' . \Locale::getDefault() . $url)->toString() : $url);
-//                         } catch(\Exception $e) {
+                        } catch(\Exception $e) {
                         	
-//                         }
+                        }
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
                             'label' => $translator->translate((string)$row['title']),
