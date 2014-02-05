@@ -91,7 +91,7 @@ class Navigation extends DefaultNavigationFactory
                         }
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
-                            'label' => $translator->translate((string)$row['title']),
+                            'label' => $translator->translate((string)$row['title']) . 'test',
                             'uri' => $url,
                             'pages' => $this->buildNavigationArray($serviceLocator, $row),
                             'class' => $row['css'],
