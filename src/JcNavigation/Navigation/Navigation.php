@@ -70,11 +70,11 @@ class Navigation extends DefaultNavigationFactory
                         
                         if(substr($url, 0, 1) == '/') {
                             $url = substr($url, 1);
-                            if(($view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url)) == 'http://www.tranviasdezaragoza.es//es/informacion/contacto') {
-                                echo '<pre>' . $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url) . '</pre>';
-                                exit;
-                            }
-                           
+                        }
+                        
+                        if(($view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url)) == 'http://www.tranviasdezaragoza.es//es/informacion/contacto') {
+                            echo '<pre>' . $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url) . '</pre>';
+                            exit;
                         }
                         
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
