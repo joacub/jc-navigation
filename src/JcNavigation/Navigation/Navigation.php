@@ -67,10 +67,10 @@ class Navigation extends DefaultNavigationFactory
                         break;
                     case $collector instanceof AbstractCollector:
                         $url = (string) $row['url'];
-                        $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->basePath($url));
+                        $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . $view->basePath($url));
                         
                         try {
-                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), '/' . 'es' . $url)->toString() : $url);
+                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), '/' . \Locale::getDefault() . $url)->toString() : $url);
                         } catch(\Exception $e) {
                         	echo '<pre>/' . \Locale::getDefault() . $url . '</pre>';
                         }
