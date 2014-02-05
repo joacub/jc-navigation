@@ -68,6 +68,11 @@ class Navigation extends DefaultNavigationFactory
                     case $collector instanceof AbstractCollector:
                         $url = (string) $row['url'];
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->basePath($url));
+                        
+                        if($url == '/')
+                            $url = '';
+                        
+                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), '/' . \Locale::getDefault() . $url)->toString() : $url);
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
                             'label' => $translator->translate((string)$row['title']),
