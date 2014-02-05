@@ -73,11 +73,6 @@ class Navigation extends DefaultNavigationFactory
                         if(substr($url, 0, 1) == '/') {
                             $url = substr($url, 1);
                         }
-                        $debugUri = $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url);
-                        if($debugUri == 'http://www.tranviasdezaragoza.es//es/informacion/contacto') {
-                            echo '<pre>' . $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url) . '</pre>';
-                            exit;
-                        }
                         
                         if($row['title'] == 'Atención al cliente') {
                             
@@ -86,6 +81,8 @@ class Navigation extends DefaultNavigationFactory
 		                    
 		                    if($ip == '85.251.56.96') {
 		                        echo '<pre>' . $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url) . '</pre>';
+		                        $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
+		                        echo '<pre>' . $url . '</pre>';
                             exit;
 		                    }
                             
