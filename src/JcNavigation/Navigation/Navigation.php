@@ -81,7 +81,7 @@ class Navigation extends DefaultNavigationFactory
 		                    
 		                    if($ip == '85.251.56.96') {
 		                        echo '<pre>' . $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url) . '</pre>';
-		                        $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
+		                        $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
 		                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), $url)->toString() : $url);
 		                        echo '<pre>' . $url . '</pre>';
                             exit;
