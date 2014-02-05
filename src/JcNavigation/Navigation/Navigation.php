@@ -77,6 +77,11 @@ class Navigation extends DefaultNavigationFactory
                             exit;
                         }
                         
+                        if(strpos($url, "informacion/contacto")) {
+                        	
+                            exit;
+                        }
+                        
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
                         
                         try {
