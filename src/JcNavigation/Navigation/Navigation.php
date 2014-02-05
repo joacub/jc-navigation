@@ -78,8 +78,8 @@ class Navigation extends DefaultNavigationFactory
                         }
                         
                         if($row['title'] == 'Atención al cliente') {
-                        	
-                            exit;
+                            echo '<pre>' . $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url) . '</pre>';
+                            
                         }
                         
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
