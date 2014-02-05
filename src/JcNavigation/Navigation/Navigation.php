@@ -75,7 +75,7 @@ class Navigation extends DefaultNavigationFactory
                         try {
                         $url = ($detector ? $detector->assemble(\Locale::getDefault(), '/' . \Locale::getDefault() . $url)->toString() : $url);
                         } catch(\Exception $e) {
-                        	
+                        	echo '<pre>/' . \Locale::getDefault() . $url . '</pre>';
                         }
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
