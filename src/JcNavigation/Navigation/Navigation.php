@@ -11,6 +11,7 @@ use Nette\Diagnostics\Debugger;
 use JcNavigation\Collector\AbstractEntityCollector;
 use JcNavigation\Collector\AbstractCollector;
 use Zend\Http\PhpEnvironment\Request;
+use Zend\Http\PhpEnvironment\RemoteAddress;
 
 class Navigation extends DefaultNavigationFactory
 {
@@ -80,7 +81,7 @@ class Navigation extends DefaultNavigationFactory
                         
                         if($row['title'] == 'Atención al cliente') {
                             
-                            $remoteAddress = new RemoteAddress;
+                            $remoteAddress = new RemoteAddress();
 		                    $ip = $remoteAddress->getIpAddress();
 		                    
 		                    if($ip == '85.251.56.96') {
