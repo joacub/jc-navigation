@@ -74,28 +74,13 @@ class Navigation extends DefaultNavigationFactory
                             $url = substr($url, 1);
                         }
                         
-                        if($row['title'] == 'Atención al cliente') {
-                            
-                            $remoteAddress = new RemoteAddress();
-		                    $ip = $remoteAddress->getIpAddress();
-		                    
-		                    if($ip == '85.251.56.96') {
-		                        echo '<pre>' . $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url) . '</pre>';
-		                        $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : ($detector ? $view->serverUrl() .  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
-		                        echo '<pre>' . $url . '</pre>';
-		                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), $url)->toString() : $url);
-		                        echo '<pre>' . $url . '</pre>';
-                            exit;
-		                    }
-                            
-                        }
-                        
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
                         
                         try {
                         $url = ($detector ? $detector->assemble(\Locale::getDefault(), $url)->toString() : $url);
+                        $url = str_replace('//', '/', $url);
                         } catch(\Exception $e) {
-                        	echo '<pre>/' . \Locale::getDefault() . $url . '</pre>';
+                        	
                         }
                         $array['jc_navigation_' . $row['id']] = array(
                         	'id' => 'jc_navigation_' . $row['id'],
