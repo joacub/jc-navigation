@@ -77,8 +77,10 @@ class Navigation extends DefaultNavigationFactory
                         $url = (strpos($url, "http://") === 0 || strpos($url, "https://") === 0 ? $url : $view->serverUrl() . ($detector ?  '/'.  \Locale::getDefault() : '') . $view->basePath($url));
                         
                         try {
-                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), $url)->toString() : $url);
-//                         $url = str_replace('//', '/', $url);
+	                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), $url)->toString() : $url);
+	                        $parts = explode(\Locale::getDefault());
+	                        
+	                        $url = str_replace($view->serverUrl() . '//', $view->serverUrl() . '/'.$firstPart, $url);
                         } catch(\Exception $e) {
                         	
                         }
