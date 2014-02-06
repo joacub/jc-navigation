@@ -78,7 +78,7 @@ class Navigation extends DefaultNavigationFactory
                         
                         try {
 	                        $url = ($detector ? $detector->assemble(\Locale::getDefault(), $url)->toString() : $url);
-	                        $url = str_replace($view->serverUrl() . '//', $view->serverUrl() . '/'.$firstPart, $url);
+	                        $url = str_replace($view->serverUrl() . '//', $view->serverUrl() . '/', $url);
                         } catch(\Exception $e) {
                         	
                         }
